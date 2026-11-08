@@ -2,13 +2,21 @@
 #include "book/io.hpp"
 
 void solve() {
-  int n;
-  cin >> n;
-  if (n % 2 == 1)
-    cout << n / 2 + 1 << endl;
-  else
-    cout << n / 2 << endl;
-  return;
+  int N, Q;
+  cin >> N >> Q;
+  vector<int> A(N);
+  iota(A.begin(), A.end(), 1);
+  for (int i = 0; i < Q; i++) {
+    int k;
+    cin >> k;
+    for (int j = 0; j < k; j++) {
+      A[j] = -A[j];
+    }
+    reverse(A.begin(), A.begin() + k);
+  }
+  for (int i = 0; i < N; i++) {
+    cout << A[i] << endl;
+  }
 }
 
 int main() {
