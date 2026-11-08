@@ -1,5 +1,8 @@
 # Generated submission code (rebuild with tools/expander.py).
 /output.cpp
+
+# Downloaded samples for the current problem.
+/samples/
 /.samples-*/
 
 # Executables produced by local compilation.

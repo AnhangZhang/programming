@@ -141,7 +141,7 @@ export CXX=g++-15
 ```
 
 具体名称以本机安装版本为准。更换编译器或编译参数会重新编译；更新系统头文件后可使用 `--force`。
-`a.out`、`output.cpp` 和 `.build/` 已被 Git 忽略，每台机器独立生成。
+`a.out`、`output.cpp`、`.build/` 和 `samples/` 已被 Git 忽略，每台机器独立生成或获取。
 
 ## 目录与底层工具
 
