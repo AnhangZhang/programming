@@ -1,0 +1,42 @@
+# Generated submission code (rebuild with tools/expander.py).
+/output.cpp
+/.samples-*/
+
+# Executables produced by local compilation.
+/a.out
+/a.exe
+/main
+/main.exe
+/output
+/output.exe
+*.exe
+
+# C++ intermediate files, precompiled headers, and debug symbols.
+*.o
+*.obj
+*.gch
+*.pch
+*.dSYM/
+/build/
+/.build/
+
+# Python caches and local virtual environments.
+__pycache__/
+*.py[cod]
+/.venv/
+/venv/
+
+# Editor caches; shared .vscode configuration stays tracked.
+/.vscode/ipch/
+*.VC.db
+*.VC.db-shm
+*.VC.db-wal
+*.swp
+*.swo
+*~
+
+# macOS and Windows metadata.
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
