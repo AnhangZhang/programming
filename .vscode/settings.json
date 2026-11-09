@@ -5,6 +5,9 @@
   "[cpp]": {
     "editor.defaultFormatter": "ms-vscode.cpptools",
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file"
+    "editor.formatOnSaveMode": "file",
+    "editor.quickSuggestions": false,
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.inlineSuggest.enabled": false
   }
 }

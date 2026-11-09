@@ -3,6 +3,9 @@
 using namespace std;
 
 using ll = long long;
+using i128 = __int128;
+using u128 = unsigned __int128;
+using f128 = __float128;
 using db = double;
 using str = string;
 using pi = pair<ll, ll>;
