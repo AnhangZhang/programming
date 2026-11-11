@@ -10,6 +10,9 @@ char out[100];
 // pointer of ibuf, obuf
 uint32_t pil = 0, pir = 0, por = 0;
 bool input_eof = false;
+#if defined(LOCAL)
+FILE* output_stream = stdout;
+#endif
 
 template <class T>
 constexpr bool is_signed_integer_v = is_signed_v<T> || is_same_v<T, i128>;
@@ -74,7 +77,11 @@ inline char get_char() {
 }
 
 inline void flush() {
+#if defined(LOCAL)
+  fwrite(obuf, 1, por, output_stream);
+#else
   fwrite(obuf, 1, por, stdout);
+#endif
   por = 0;
 }
 
@@ -308,6 +315,19 @@ void print(Head&& head, Tail&&... tail) {
   wt('\n');
 }
 
+#if defined(LOCAL)
+template <class... Args>
+void debug_print(Args&&... args) {
+  // Finish pending answers before routing the shared formatter to stderr.
+  flush();
+  FILE* previous = output_stream;
+  output_stream = stderr;
+  print(forward<Args>(args)...);
+  flush();
+  output_stream = previous;
+}
+#endif
+
 // gcc expansion. called automaticall after main.
 void __attribute__((destructor)) _d() { flush(); }
 }  // namespace fastio
@@ -322,28 +342,25 @@ using fastio::read;
       __VA_ARGS__, SHOW8, SHOW7, SHOW6, SHOW5, SHOW4, SHOW3, SHOW2, SHOW1) \
   (__VA_ARGS__)
 #define SHOW_IMPL(_1, _2, _3, _4, _5, _6, _7, _8, NAME, ...) NAME
-#define SHOW1(x) print(HDR, #x, "=", (x)), flush()
-#define SHOW2(x, y) print(HDR, #x, "=", (x), #y, "=", (y)), flush()
+#define SHOW1(x) fastio::debug_print(HDR, #x, "=", (x))
+#define SHOW2(x, y) fastio::debug_print(HDR, #x, "=", (x), #y, "=", (y))
 #define SHOW3(x, y, z) \
-  print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z)), flush()
+  fastio::debug_print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z))
 #define SHOW4(x, y, z, w) \
-  print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", (w)), flush()
+  fastio::debug_print(    \
+      HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", (w))
 #define SHOW5(x, y, z, w, v)                                                  \
-  print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", (w), #v, "=", \
-      (v)),                                                                   \
-      flush()
+  fastio::debug_print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", \
+      (w), #v, "=", (v))
 #define SHOW6(x, y, z, w, v, u)                                               \
-  print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", (w), #v, "=", \
-      (v), #u, "=", (u)),                                                     \
-      flush()
+  fastio::debug_print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", \
+      (w), #v, "=", (v), #u, "=", (u))
 #define SHOW7(x, y, z, w, v, u, t)                                            \
-  print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", (w), #v, "=", \
-      (v), #u, "=", (u), #t, "=", (t)),                                       \
-      flush()
+  fastio::debug_print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", \
+      (w), #v, "=", (v), #u, "=", (u), #t, "=", (t))
 #define SHOW8(x, y, z, w, v, u, t, s)                                         \
-  print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", (w), #v, "=", \
-      (v), #u, "=", (u), #t, "=", (t), #s, "=", (s)),                         \
-      flush()
+  fastio::debug_print(HDR, #x, "=", (x), #y, "=", (y), #z, "=", (z), #w, "=", \
+      (w), #v, "=", (v), #u, "=", (u), #t, "=", (t), #s, "=", (s))
 #else
 #define SHOW(...)
 #endif

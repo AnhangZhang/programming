@@ -2,12 +2,25 @@
   "C_Cpp.formatting": "clangFormat",
   "C_Cpp.clang_format_path": "",
   "C_Cpp.clang_format_style": "file",
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}",
+    "${workspaceFolder}/**"
+  ],
+  "C_Cpp.default.browse.path": [
+    "${workspaceFolder}",
+    "${workspaceFolder}/**"
+  ],
   "[cpp]": {
     "editor.defaultFormatter": "ms-vscode.cpptools",
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
-    "editor.quickSuggestions": false,
-    "editor.suggestOnTriggerCharacters": false,
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    },
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.parameterHints.enabled": true,
     "editor.inlineSuggest.enabled": false
   }
 }

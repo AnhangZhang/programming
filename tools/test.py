@@ -80,8 +80,8 @@ def test_samples(cxx, standard, timeout, force=False):
             show_block("input", input_data)
             show_block("output", actual)
             show_block("expected", expected)
-            if stderr:
-                show_block("stderr", stderr)
+        if stderr:
+            show_block("stderr", stderr)
         print("-" * 40, flush=True)
 
     print(f"[INFO] {passed_count}/{len(inputs)} samples passed")
