@@ -1,39 +1,23 @@
 #include "book/template.hpp"
 #include "book/io.hpp"
 
-#include "book/graph/shortest_path/dijkstra.hpp"
-
 void solve() {
-  INT(N, Q);
-
-  vi A(N), B(N);
-  Graph<ll> G(N + 1);
-  vv(pi, E, N + 1);
-  FOR(i, 1, N + 1) {
-    read(A[i - 1]);
-    G.add(i - 1, i % N, A[i - 1]);
-  }
-  FOR(i, 1, N + 1) {
-    read(B[i - 1]);
-    G.add(i - 1, N, B[i - 1]);
-  }
-
-  auto dist = dijkstra<ll>(G, N);
-
-  vi pref = cumsum<ll>(vector<ll>(A.begin(), A.begin() + N - 1));
-
+  LL(N, Q);
+  VEC(ll, P, N);
   FOR(Q) {
-    INT(s, t);
-    s--;
-    t--;
-
-    ll ANS = dist[s] + dist[t];
-    if (t != N) {
-      ckmin(ANS, pref[t] - pref[s]);
-      ckmin(ANS, pref[s] + A.back() + pref.back() - pref[t]);
-    }
-    print(ANS);
+    LL(A);
+    P.eb(A);
   }
+
+  vi ANS;
+  vt<bool> used(N + 1);
+  FOR_R(i, si(P)) {
+    if (used[P[i]]) continue;
+    used[P[i]] = true;
+    ANS.eb(P[i]);
+  }
+  reverse(all(ANS));
+  print(ANS);
 }
 
 int main() {
