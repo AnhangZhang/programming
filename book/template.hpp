@@ -5,6 +5,10 @@
 using namespace std;
 
 using ll = long long;
+using u8 = uint8_t;
+using u16 = uint16_t;
+using u32 = uint32_t;
+using u64 = uint64_t;
 using i128 = __int128;
 using u128 = unsigned __int128;
 using f128 = __float128;
@@ -72,6 +76,21 @@ bool ckmax(T& a, const U& b) {
   return changed;
 }
 
+int popcnt(int x) { return __builtin_popcount(x); }
+int popcnt(u32 x) { return __builtin_popcount(x); }
+int popcnt(ll x) { return __builtin_popcountll(x); }
+int popcnt(u64 x) { return __builtin_popcountll(x); }
+// (0, 1, 2, 3, 4) -> (-1, 0, 1, 1, 2)
+int topbit(int x) { return (x == 0 ? -1 : 31 - __builtin_clz(x)); }
+int topbit(u32 x) { return (x == 0 ? -1 : 31 - __builtin_clz(x)); }
+int topbit(ll x) { return (x == 0 ? -1 : 63 - __builtin_clzll(x)); }
+int topbit(u64 x) { return (x == 0 ? -1 : 63 - __builtin_clzll(x)); }
+// (0, 1, 2, 3, 4) -> (-1, 0, 1, 0, 2)
+int lowbit(int x) { return (x == 0 ? -1 : __builtin_ctz(x)); }
+int lowbit(u32 x) { return (x == 0 ? -1 : __builtin_ctz(x)); }
+int lowbit(ll x) { return (x == 0 ? -1 : __builtin_ctzll(x)); }
+int lowbit(u64 x) { return (x == 0 ? -1 : __builtin_ctzll(x)); }
+
 template <typename T>
 T floor(T x, T y) {
   return x / y - (x % y < 0);
@@ -91,6 +110,12 @@ template <class T>
 T POP(queue<T>& que) {
   T a = que.front();
   que.pop();
+  return a;
+}
+template <class T>
+T POP(vector<T>& que) {
+  T a = que.back();
+  que.pop_back();
   return a;
 }
 

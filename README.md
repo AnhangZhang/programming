@@ -5,11 +5,19 @@
 
 需要 Python 3，以及支持 C++20 的 GCC 或 Clang。Python 工具仅依赖标准库。
 
-在项目根目录执行：
+在项目根目录执行，Bash / Zsh 使用：
 
 ```bash
 source tools/compro.sh
 ```
+
+fish 使用：
+
+```fish
+source tools/compro.fish
+```
+
+fish 无法直接 `source` Bash / Zsh 脚本。`compro.fish` 会调用 Bash 执行共用实现，macOS 自带 Bash，无需切换默认 shell。
 
 当前终端随即可以使用下列命令；从其他目录执行也会操作这个项目，且不会改变终端当前目录。
 
@@ -26,8 +34,14 @@ source tools/compro.sh
 source "/你的路径/programming/tools/compro.sh"
 ```
 
-两台机器分别填写各自的目录路径。修改后重新打开终端，或在当前终端执行这一行即可。
-`compro.sh` 需要通过 `source` 加载。
+fish 则在 `~/.config/fish/config.fish` 中加入：
+
+```fish
+source "/你的路径/programming/tools/compro.fish"
+```
+
+两台机器分别填写各自的目录路径。修改后重新打开终端，或在当前终端执行对应的 `source` 行即可。
+快捷命令入口需要通过 `source` 加载，直接运行脚本不会给当前终端添加命令。
 
 ## 日常流程
 
@@ -142,6 +156,12 @@ cprun --cxx g++-15 --timeout 5   # 指定编译器和样例时限
 export CXX=g++-15
 ```
 
+fish 使用：
+
+```fish
+set -gx CXX g++-15
+```
+
 具体名称以本机安装版本为准。更换编译器或编译参数会重新编译；更新系统头文件后可使用 `--force`。
 `a.out`、`output.cpp`、`.build/` 和 `samples/` 已被 Git 忽略，每台机器独立生成或获取。
 
@@ -157,6 +177,7 @@ export CXX=g++-15
 | `a.out` | 本地编译产物 |
 | `.clang-format` | 统一的代码格式规则 |
 | `tools/compro.sh` | Bash / Zsh 快捷命令入口 |
+| `tools/compro.fish` | fish 快捷命令入口 |
 
 Python 工具也可在项目根目录单独调用：
 
