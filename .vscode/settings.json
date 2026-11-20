@@ -2,12 +2,17 @@
   "C_Cpp.formatting": "clangFormat",
   "C_Cpp.clang_format_path": "",
   "C_Cpp.clang_format_style": "file",
+  "C_Cpp.default.forcedInclude": [
+    "${workspaceFolder}/book/template.hpp"
+  ],
   "C_Cpp.default.includePath": [
     "${workspaceFolder}",
+    "${workspaceFolder}/book",
     "${workspaceFolder}/**"
   ],
   "C_Cpp.default.browse.path": [
     "${workspaceFolder}",
+    "${workspaceFolder}/book",
     "${workspaceFolder}/**"
   ],
   "[cpp]": {

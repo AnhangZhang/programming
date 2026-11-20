@@ -92,7 +92,7 @@ def ensure_built(cxx, standard, force=False):
     cache_dir = PROJECT_ROOT / ".build"
     record_path = cache_dir / "state.json"
     command = [*compiler, f"-std={standard}", "-O2", "-Wall", "-Wextra", "-DLOCAL",
-               "-I", str(PROJECT_ROOT), str(source)]
+               "-I", str(PROJECT_ROOT), "-I", str(PROJECT_ROOT / "book"), str(source)]
     compiler_stat = compiler_path.stat()
     build_key = {
         "command": command,

@@ -28,7 +28,7 @@ class ExpansionError(Exception):
 
 class Expander:
     def __init__(self, include_dirs=()):
-        self.include_dirs = [PROJECT_ROOT, *map(Path, include_dirs)]
+        self.include_dirs = [PROJECT_ROOT, PROJECT_ROOT / "book", *map(Path, include_dirs)]
         self.visited = set()
 
     @staticmethod

@@ -1,0 +1,52 @@
+struct Mo {
+  vt<pair<int, int>> LR;
+  void add(int L, int R) { LR.eb(L, R); }
+
+  static vt<int> get_mo_order(vt<pair<int, int>> LR) {
+    int N = 1;
+    for (auto [l, r] : LR) ckmax(N, l), ckmax(N, r);
+    int Q = si(LR);
+    if (Q == 0) return {};
+    assert(N * sqrt(Q) <= TEN[9]);
+    int bs = sqrt(3) * N / sqrt(2 * Q);
+    ckmax(bs, 1);
+    vt<int> I(Q);
+    iota(all(I), 0);
+    sort(all(I), [&](int a, int b) {
+      int aa = LR[a].fi / bs, bb = LR[b].fi / bs;
+      if (aa != bb) return aa < bb;
+      return (aa & 1) ? LR[a].se > LR[b].se : LR[a].se < LR[b].se;
+    });
+
+    auto cost = [&](int a, int b) -> int {
+      return abs(LR[I[a]].fi - LR[I[b]].fi) + abs(LR[I[a]].se - LR[I[b]].se);
+    };
+
+    auto work = [&](int k) -> void {
+      if (cost(k, k + 2) + cost(k + 1, k + 3) <
+          cost(k, k + 1) + cost(k + 2, k + 3)) {
+        swap(I[k + 1], I[k + 2]);
+      }
+      if (cost(k, k + 3) + cost(k + 1, k + 4) <
+          cost(k, k + 1) + cost(k + 3, k + 4)) {
+        swap(I[k + 1], I[k + 3]);
+      }
+    };
+    FOR(k, Q - 5) work(k);
+    FOR_R(k, Q - 5) work(k);
+    return I;
+  }
+
+  template <typename F1, typename F2, typename F3, typename F4, typename F5>
+  void calc(F1 add_l, F2 add_r, F3 rm_l, F4 rm_r, F5 query) {
+    auto I = get_mo_order(LR);
+    int l = 0, r = 0;
+    for (auto id : I) {
+      while (l > LR[id].fi) add_l(--l);
+      while (r < LR[id].se) add_r(r++);
+      while (l < LR[id].fi) rm_l(l++);
+      while (r > LR[id].se) rm_r(--r);
+      query(id);
+    }
+  }
+};

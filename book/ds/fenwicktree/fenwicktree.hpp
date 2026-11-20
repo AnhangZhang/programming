@@ -1,4 +1,4 @@
-#include "book/alg/monoid/add.hpp"
+#include "alg/monoid/add.hpp"
 
 template <typename Monoid>
 struct FenwickTree {
@@ -44,6 +44,8 @@ struct FenwickTree {
     for (; i > 0; i -= i & -i) ret = G::op(ret, dat[i - 1]);
     return ret;
   }
+  T sum(int k) const { return prefix_prod(k); }
+  T sum(int L, int R) const { return prod(L, R); }
   T prod(int i) const { return prefix_prod(i); }
   T prod(int l, int r) const {
     ckmax(l, 0);
@@ -59,7 +61,8 @@ struct FenwickTree {
     }
     return G::op(pos, G::inverse(neg));
   }
-  void add(int i, T x) {
+  void add(int k, T x) { multiply(k, x); }
+  void multiply(int i, T x) {
     assert(0 <= i && i < n);
     total = G::op(total, x);
     for (++i; i <= n; i += i & -i) dat[i - 1] = G::op(dat[i - 1], x);

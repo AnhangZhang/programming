@@ -100,6 +100,13 @@ T ceil(T x, T y) {
   return x / y + (x % y > 0);
 }
 
+constexpr auto TEN = [] {
+  array<u64, 20> A{};
+  A[0] = 1;
+  for (int i = 1; i < 20; i++) A[i] = 10 * A[i - 1];
+  return A;
+}();
+
 template <class T, class Container, class Compare>
 T POP(priority_queue<T, Container, Compare>& que) {
   T a = que.top();
@@ -135,4 +142,14 @@ vt<T> cumsum(const vt<U>& A, int off = 1) {
   FOR(i, N) pref[i + 1] = pref[i] + A[i];
   if (off == 0) pref.erase(pref.begin());
   return pref;
+}
+
+// stable sort
+template <typename T>
+vt<int> argsort(const vt<T>& A) {
+  vt<int> ids(si(A));
+  iota(all(ids), 0);
+  sort(all(ids),
+      [&](int i, int j) { return A[i] == A[j] ? i < j : A[i] < A[j]; });
+  return ids;
 }

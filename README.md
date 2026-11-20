@@ -139,7 +139,15 @@ cpsave abc123_a
 ## 编译参数与缓存
 
 `cprun` 和 `dbrun` 共用根目录的 `a.out` 和 `.build/` 中的编译记录。
-默认编译参数为 `-std=c++20 -O2 -Wall -Wextra -DLOCAL -I 项目根目录`。
+默认编译参数为 `-std=c++20 -O2 -Wall -Wextra -DLOCAL -I 项目根目录 -I 项目根目录/book`。
+编译、VS Code 头文件补全和提交代码展开均支持省略 `book/` 前缀，例如：
+
+```cpp
+#include "template.hpp"
+#include "graph/base.hpp"
+```
+
+原来的 `#include "book/graph/base.hpp"` 写法也可继续使用。
 首次运行会编译，之后根据源码、实际引用的本地头文件内容和编译参数决定是否重新编译。
 编译器自动记录嵌套头文件依赖，编译失败时停止，不运行旧程序。
 
